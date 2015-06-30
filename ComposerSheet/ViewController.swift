@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, DLFComposeViewControllerDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,10 +22,15 @@ class ViewController: UIViewController {
 
     @IBAction func didTapButton(sender: AnyObject) {
         let composer = DLFComposeViewController()
+        composer.delegate = self
         let navigation = UINavigationController(rootViewController: composer)
         navigation.modalPresentationStyle = UIModalPresentationStyle.Custom
         self.presentViewController(navigation, animated: true, completion: nil)
         
+    }
+    
+    func didTweet(composeViewController: DLFComposeViewController) {
+        println("did tweet")
     }
 
 }

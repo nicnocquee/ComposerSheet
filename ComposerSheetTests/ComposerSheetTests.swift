@@ -98,6 +98,34 @@ class ComposerSheetTests: XCTestCase {
         XCTAssertNotNil(constraints, "character label constraints should not be nil")
     }
     
+    func testNextButton () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        
+        class ComposeDelegate: DLFComposeViewControllerDelegate {
+            var callback: ((composeViewController: DLFComposeViewController) -> Void)?
+            
+            @objc func didTweet(composeViewController: DLFComposeViewController) {
+                if let call = self.callback {
+                    call(composeViewController: composeViewController)
+                }
+            }
+        }
+        
+        let composeDelegate = ComposeDelegate()
+        let expectation = expectationWithDescription("...")
+        composeDelegate.callback = {(composerViewController) -> Void in
+            XCTAssertTrue(composerViewController === composerController, "next button should call delegate on tap")
+            expectation.fulfill()
+        }
+        composerController.delegate = composeDelegate
+        
+        composerController.nextButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+        
+        waitForExpectationsWithTimeout(1) { error in
+        }
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {

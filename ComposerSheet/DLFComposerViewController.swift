@@ -9,7 +9,13 @@
 import Foundation
 import UIKit
 
+@objc protocol DLFComposeViewControllerDelegate {
+    optional func didTweet(composeViewController: DLFComposeViewController)
+}
+
 class DLFComposeViewController: UIViewController {
+    
+    weak var delegate: DLFComposeViewControllerDelegate?
     
     let sheetView: UIView
     let cancelButton: UIButton
@@ -137,7 +143,7 @@ class DLFComposeViewController: UIViewController {
     }
     
     func didTapNextButton () {
-        
+        delegate?.didTweet?(self)
     }
     
     func didTapCancelButton () {
