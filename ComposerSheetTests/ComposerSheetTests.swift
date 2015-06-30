@@ -25,6 +25,10 @@ class ComposerSheetTests: XCTestCase {
         // This is an example of a functional test case.
         let composerController = DLFComposeViewController()
         XCTAssertNotNil(composerController.sheetView, "Sheet view should not be nil")
+        XCTAssertNotNil(composerController.sheetTitle, "Sheet title should not be nil")
+        XCTAssertNotNil(composerController.cancelButton, "Sheet cancel button should not be nil")
+        XCTAssertNotNil(composerController.nextButton, "Sheet next button should not be nil")
+        XCTAssertNotNil(composerController.charactersLabel, "Sheet characters label should not be nil")
         XCTAssertTrue(CGPointEqualToPoint(composerController.sheetView.frame.origin, CGPointZero), "Initialized sheet view should contain point zero")
         XCTAssertTrue(composerController.sheetView.frame.width == 0, "Initialized sheet view width should be zero")
     }
@@ -82,7 +86,16 @@ class ComposerSheetTests: XCTestCase {
         let window = UIApplication.sharedApplication().delegate?.window!
         view.frame = window!.frame
         let constraints = composerController.headerLineConstraints()
-        XCTAssertNotNil(constraints, "header line constraints should not be zero")
+        XCTAssertNotNil(constraints, "header line constraints should not be nil")
+    }
+    
+    func testCharactersLabelConstraints () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        let window = UIApplication.sharedApplication().delegate?.window!
+        view.frame = window!.frame
+        let constraints = composerController.charactersLabelConstraints()
+        XCTAssertNotNil(constraints, "character label constraints should not be nil")
     }
     
     func testPerformanceExample() {

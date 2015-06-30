@@ -15,6 +15,7 @@ class DLFComposeViewController: UIViewController {
     let cancelButton: UIButton
     let nextButton: UIButton
     let sheetTitle: UILabel
+    let charactersLabel: UILabel
     let headerLine: UIView
     let mediaURLLength = 23
     
@@ -24,6 +25,7 @@ class DLFComposeViewController: UIViewController {
         nextButton = UIButton(frame: CGRectZero)
         sheetTitle = UILabel(frame: CGRectZero)
         headerLine = UIView(frame: CGRectZero)
+        charactersLabel = UILabel(frame: CGRectZero)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -73,9 +75,16 @@ class DLFComposeViewController: UIViewController {
         sheetView.addSubview(sheetTitle)
         sheetView.addConstraints(sheetComposerTitleConstraints())
         
-        headerLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        headerLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         sheetView.addSubview(headerLine)
         sheetView.addConstraints(headerLineConstraints())
+        
+        charactersLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
+        charactersLabel.text = "140"
+        charactersLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
+        charactersLabel.font = UIFont.systemFontOfSize(12)
+        sheetView.addSubview(charactersLabel)
+        sheetView.addConstraints(charactersLabelConstraints())
     }
     
     func sheetComposerConstraints () -> [AnyObject]{
@@ -115,6 +124,16 @@ class DLFComposeViewController: UIViewController {
         let topConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[sheetTitle]-15-[headerLine]", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
         
         return horizontalConstraints + topConstraints + [heightConstraint]
+    }
+    
+    func charactersLabelConstraints () -> [AnyObject] {
+        let views: NSMutableDictionary = NSMutableDictionary()
+        views.setValue(charactersLabel, forKey: "charactersLabel")
+        
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:[charactersLabel]-10-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[charactersLabel]-10-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        
+        return horizontalConstraints + verticalConstraints
     }
     
     func didTapNextButton () {
