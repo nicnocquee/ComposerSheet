@@ -57,6 +57,25 @@ class ComposerSheetTests: XCTestCase {
         XCTAssertTrue(composerController.sheetTitle.center.y == composerController.nextButton.center.y, "Cancel button and Title button should be same vertical center")
     }
     
+    func testCancelButton () {
+        let window = UIWindow(frame: CGRectZero)
+        window.makeKeyAndVisible()
+        let composerController = DLFComposeViewController()
+        let viewController = UIViewController()
+        window.rootViewController = viewController
+        viewController.presentViewController(composerController, animated: false, completion: nil)
+        XCTAssertTrue(composerController.respondsToSelector("didTapCancelButton"), "didTapCancelButton ")
+        let actions = composerController.cancelButton.actionsForTarget(composerController, forControlEvent: UIControlEvents.TouchUpInside)
+        XCTAssertTrue(actions?.count == 1, "Cancel button should have one action for touch up inside")
+        let touchUpInside: AnyObject? = actions?.first
+        XCTAssertEqual(touchUpInside as! String, "didTapCancelButton", "Cancel touch up inside action should be didTapCancelButton")
+        composerController.cancelButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+        
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.01))
+        
+        XCTAssertNil(viewController.presentedViewController, "Cancel button should dismiss DLFComposeViewController")
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {

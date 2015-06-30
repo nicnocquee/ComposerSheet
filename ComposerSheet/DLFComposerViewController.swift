@@ -48,12 +48,16 @@ class DLFComposeViewController: UIViewController {
         cancelButton.titleLabel!.font = UIFont.systemFontOfSize(15)
         cancelButton.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
         cancelButton.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+        cancelButton.showsTouchWhenHighlighted = true
+        cancelButton.addTarget(self, action: "didTapCancelButton", forControlEvents: UIControlEvents.TouchUpInside)
         cancelButton.sizeToFit()
         
         nextButton.setTitle(NSLocalizedString("Tweet", comment: ""), forState: UIControlState.Normal)
         nextButton.setTitleColor(self.view.tintColor, forState: UIControlState.Normal)
         nextButton.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
         nextButton.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
+        nextButton.addTarget(self, action: "didTapNextButton", forControlEvents: UIControlEvents.TouchUpInside)
+        nextButton.showsTouchWhenHighlighted = true
         nextButton.titleLabel!.font = UIFont.boldSystemFontOfSize(15)
         nextButton.sizeToFit()
         
@@ -91,6 +95,14 @@ class DLFComposeViewController: UIViewController {
         let nextTitleTopConstraint = NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: sheetTitle, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
         
         return horizontalConstraints + sheetTitleTopConstraints + [sheetTitleCenterXConstraint, cancelTitleTopConstraint, nextTitleTopConstraint]
+    }
+    
+    func didTapNextButton () {
+        
+    }
+    
+    func didTapCancelButton () {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
