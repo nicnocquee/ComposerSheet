@@ -29,6 +29,7 @@ class ComposerSheetTests: XCTestCase {
         XCTAssertNotNil(composerController.cancelButton, "Sheet cancel button should not be nil")
         XCTAssertNotNil(composerController.nextButton, "Sheet next button should not be nil")
         XCTAssertNotNil(composerController.charactersLabel, "Sheet characters label should not be nil")
+        XCTAssertNotNil(composerController.textView, "Sheet text view should not be nil")
         XCTAssertTrue(CGPointEqualToPoint(composerController.sheetView.frame.origin, CGPointZero), "Initialized sheet view should contain point zero")
         XCTAssertTrue(composerController.sheetView.frame.width == 0, "Initialized sheet view width should be zero")
     }
@@ -75,7 +76,7 @@ class ComposerSheetTests: XCTestCase {
         XCTAssertEqual(touchUpInside as! String, "didTapCancelButton", "Cancel touch up inside action should be didTapCancelButton")
         composerController.cancelButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
         
-        NSRunLoop.mainRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.01))
+        NSRunLoop.mainRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.4))
         
         XCTAssertNil(viewController.presentedViewController, "Cancel button should dismiss DLFComposeViewController")
     }
@@ -96,6 +97,15 @@ class ComposerSheetTests: XCTestCase {
         view.frame = window!.frame
         let constraints = composerController.charactersLabelConstraints()
         XCTAssertNotNil(constraints, "character label constraints should not be nil")
+    }
+    
+    func testTextViewConstraints () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        let window = UIApplication.sharedApplication().delegate?.window!
+        view.frame = window!.frame
+        let constraints = composerController.textViewConstraints()
+        XCTAssertNotNil(constraints, "text view constraints should not be nil")
     }
     
     func testNextButton () {

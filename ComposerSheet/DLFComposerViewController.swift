@@ -23,6 +23,7 @@ class DLFComposeViewController: UIViewController {
     let sheetTitle: UILabel
     let charactersLabel: UILabel
     let headerLine: UIView
+    let textView: UITextView
     let mediaURLLength = 23
     
     init() {
@@ -32,6 +33,7 @@ class DLFComposeViewController: UIViewController {
         sheetTitle = UILabel(frame: CGRectZero)
         headerLine = UIView(frame: CGRectZero)
         charactersLabel = UILabel(frame: CGRectZero)
+        textView = UITextView(frame: CGRectZero)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -91,6 +93,14 @@ class DLFComposeViewController: UIViewController {
         charactersLabel.font = UIFont.systemFontOfSize(12)
         sheetView.addSubview(charactersLabel)
         sheetView.addConstraints(charactersLabelConstraints())
+        
+        textView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        sheetView.addSubview(textView)
+        sheetView.addConstraints(textViewConstraints())
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        textView.becomeFirstResponder()
     }
     
     func sheetComposerConstraints () -> [AnyObject]{
@@ -138,6 +148,18 @@ class DLFComposeViewController: UIViewController {
         
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:[charactersLabel]-10-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
         let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[charactersLabel]-10-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        
+        return horizontalConstraints + verticalConstraints
+    }
+    
+    func textViewConstraints () -> [AnyObject] {
+        let views: NSMutableDictionary = NSMutableDictionary()
+        views.setValue(textView, forKey: "textView")
+        views.setValue(headerLine, forKey: "headerLine")
+        views.setValue(charactersLabel, forKey: "charactersLabel")
+        
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[textView]-0-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[headerLine]-0-[textView]-0-[charactersLabel]", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
         
         return horizontalConstraints + verticalConstraints
     }
