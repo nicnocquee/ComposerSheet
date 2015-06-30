@@ -15,12 +15,15 @@ class DLFComposeViewController: UIViewController {
     let cancelButton: UIButton
     let nextButton: UIButton
     let sheetTitle: UILabel
+    let headerLine: UIView
+    let mediaURLLength = 23
     
     init() {
         sheetView = UIView(frame: CGRectZero)
         cancelButton = UIButton(frame: CGRectZero)
         nextButton = UIButton(frame: CGRectZero)
         sheetTitle = UILabel(frame: CGRectZero)
+        headerLine = UIView(frame: CGRectZero)
         super.init(nibName: nil, bundle: nil)
     }
 
@@ -42,6 +45,7 @@ class DLFComposeViewController: UIViewController {
         cancelButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         nextButton.setTranslatesAutoresizingMaskIntoConstraints(false)
         sheetTitle.setTranslatesAutoresizingMaskIntoConstraints(false)
+        headerLine.setTranslatesAutoresizingMaskIntoConstraints(false)
         
         cancelButton.setTitle(NSLocalizedString("Cancel", comment: ""), forState: UIControlState.Normal)
         cancelButton.setTitleColor(self.view.tintColor, forState: UIControlState.Normal)
@@ -68,6 +72,10 @@ class DLFComposeViewController: UIViewController {
         sheetView.addSubview(nextButton)
         sheetView.addSubview(sheetTitle)
         sheetView.addConstraints(sheetComposerTitleConstraints())
+        
+        headerLine.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.3)
+        sheetView.addSubview(headerLine)
+        sheetView.addConstraints(headerLineConstraints())
     }
     
     func sheetComposerConstraints () -> [AnyObject]{
@@ -95,6 +103,18 @@ class DLFComposeViewController: UIViewController {
         let nextTitleTopConstraint = NSLayoutConstraint(item: nextButton, attribute: NSLayoutAttribute.CenterY, relatedBy: NSLayoutRelation.Equal, toItem: sheetTitle, attribute: NSLayoutAttribute.CenterY, multiplier: 1, constant: 0)
         
         return horizontalConstraints + sheetTitleTopConstraints + [sheetTitleCenterXConstraint, cancelTitleTopConstraint, nextTitleTopConstraint]
+    }
+    
+    func headerLineConstraints () -> [AnyObject] {
+        let views: NSMutableDictionary = NSMutableDictionary()
+        views.setValue(headerLine, forKey: "headerLine")
+        views.setValue(sheetTitle, forKey: "sheetTitle")
+        
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[headerLine]-0-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        let heightConstraint = NSLayoutConstraint(item: headerLine, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 1)
+        let topConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[sheetTitle]-15-[headerLine]", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        
+        return horizontalConstraints + topConstraints + [heightConstraint]
     }
     
     func didTapNextButton () {

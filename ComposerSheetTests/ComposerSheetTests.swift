@@ -76,6 +76,15 @@ class ComposerSheetTests: XCTestCase {
         XCTAssertNil(viewController.presentedViewController, "Cancel button should dismiss DLFComposeViewController")
     }
     
+    func testHeaderLineConstraints () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        let window = UIApplication.sharedApplication().delegate?.window!
+        view.frame = window!.frame
+        let constraints = composerController.headerLineConstraints()
+        XCTAssertNotNil(constraints, "header line constraints should not be zero")
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {
