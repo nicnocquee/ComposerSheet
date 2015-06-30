@@ -41,6 +41,22 @@ class ComposerSheetTests: XCTestCase {
         XCTAssertFalse(CGRectEqualToRect(CGRectZero, composerController.sheetView.frame), "Sheet composer controller view should not be zero rect")
     }
     
+    func testSheetComposerTitleConstraints () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        let window = UIApplication.sharedApplication().delegate?.window!
+        view.frame = window!.frame
+        let constraints = composerController.sheetComposerTitleConstraints()
+        XCTAssertNotNil(constraints, "Constraints should not be nil")
+        view.setNeedsLayout()
+        view.layoutIfNeeded()
+        XCTAssertFalse(CGRectEqualToRect(CGRectZero, composerController.cancelButton.frame), "Sheet composer controller cancelButton should not be zero rect")
+        XCTAssertFalse(CGRectEqualToRect(CGRectZero, composerController.nextButton.frame), "Sheet composer controller nextButton should not be zero rect")
+        XCTAssertFalse(CGRectEqualToRect(CGRectZero, composerController.sheetTitle.frame), "Sheet composer controller sheetTitle should not be zero rect")
+        XCTAssertTrue(composerController.sheetTitle.center.y == composerController.cancelButton.center.y, "Cancel button and Title button should be same vertical center")
+        XCTAssertTrue(composerController.sheetTitle.center.y == composerController.nextButton.center.y, "Cancel button and Title button should be same vertical center")
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {
