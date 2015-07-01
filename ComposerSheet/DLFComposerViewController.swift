@@ -31,8 +31,8 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         didSet {
             let remaining = maxTweetLength-mediaURLLength-numberOfChars
             charactersLabel.text = "\(remaining)"
-            nextButton.enabled = (remaining >= 0)
-            charactersLabel.textColor = remaining >= 0 ? UIColor(red: 0, green: 0, blue: 0, alpha: 0.2) : UIColor.redColor()
+            nextButton.enabled = (remaining >= 0 && numberOfChars > 0)
+            charactersLabel.textColor = remaining >= 0 && numberOfChars > 0 ? UIColor(red: 0, green: 0, blue: 0, alpha: 0.2) : UIColor.redColor()
         }
     }
     
@@ -177,7 +177,7 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     func didTapNextButton () {
-        if numberOfChars >= 0 {
+        if numberOfChars > 0 {
             delegate?.didTweet?(self)
         }
     }

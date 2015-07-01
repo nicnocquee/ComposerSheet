@@ -113,27 +113,20 @@ class ComposerSheetTests: XCTestCase {
         let view = composerController.view
         
         class ComposeDelegate: DLFComposeViewControllerDelegate {
-            var callback: ((composeViewController: DLFComposeViewController) -> Void)?
+            var counter = 0
             
             @objc func didTweet(composeViewController: DLFComposeViewController) {
-                if let call = self.callback {
-                    call(composeViewController: composeViewController)
-                }
+                ++counter
             }
         }
         
         let composeDelegate = ComposeDelegate()
-        let expectation = expectationWithDescription("Delegate should be called on tap next")
-        composeDelegate.callback = {(composerViewController) -> Void in
-            XCTAssertTrue(composerViewController === composerController, "next button should call delegate on tap")
-            expectation.fulfill()
-        }
         composerController.delegate = composeDelegate
-        
         composerController.nextButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-        
-        waitForExpectationsWithTimeout(1) { error in
-        }
+        XCTAssertTrue(composeDelegate.counter == 0, "delegate should not be called on tapping next when there are no characters")
+        composerController.numberOfChars = 1
+        composerController.nextButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
+        XCTAssertTrue(composeDelegate.counter != 0, "delegate should be called on tapping next")
     }
     
     func testCharactersTooMany () {
