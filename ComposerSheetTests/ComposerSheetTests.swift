@@ -123,7 +123,7 @@ class ComposerSheetTests: XCTestCase {
         }
         
         let composeDelegate = ComposeDelegate()
-        let expectation = expectationWithDescription("...")
+        let expectation = expectationWithDescription("Delegate should be called on tap next")
         composeDelegate.callback = {(composerViewController) -> Void in
             XCTAssertTrue(composerViewController === composerController, "next button should call delegate on tap")
             expectation.fulfill()
@@ -134,6 +134,16 @@ class ComposerSheetTests: XCTestCase {
         
         waitForExpectationsWithTimeout(1) { error in
         }
+    }
+    
+    func testCharactersTooMany () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        
+        composerController.textView.text = "we're all stories, in the end. Just make it a good one, eh? Because it was, you know, it was the best: a daft old man, who stole a magic box and ran away. Did I ever tell you I stole it? Well, I borrowed it; I was always going to take it back. Oh, that box, Amy, you'll dream about that box. It'll never leave you. Big and little at the same time, brand-new and ancient, and the bluest blue, ever."
+        composerController.numberOfChars = count(composerController.textView.text)
+        XCTAssertFalse(composerController.nextButton.enabled, "Next button should be disabled when character + media url is more than 140")
+        XCTAssertTrue(composerController.charactersLabel.textColor.isEqual(UIColor.redColor()), "Character label should be red when more than 140 characters")
     }
     
     func testTextViewDelegate () {

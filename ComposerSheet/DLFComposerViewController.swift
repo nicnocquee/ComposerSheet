@@ -29,7 +29,10 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
     
     var numberOfChars: Int = 0 {
         didSet {
-            charactersLabel.text = "\(maxTweetLength-mediaURLLength-numberOfChars)"
+            let remaining = maxTweetLength-mediaURLLength-numberOfChars
+            charactersLabel.text = "\(remaining)"
+            nextButton.enabled = (remaining >= 0)
+            charactersLabel.textColor = remaining >= 0 ? UIColor(red: 0, green: 0, blue: 0, alpha: 0.2) : UIColor.redColor()
         }
     }
     
@@ -75,6 +78,7 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         
         nextButton.setTitle(NSLocalizedString("Tweet", comment: ""), forState: UIControlState.Normal)
         nextButton.setTitleColor(self.view.tintColor, forState: UIControlState.Normal)
+        nextButton.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Disabled)
         nextButton.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
         nextButton.setContentCompressionResistancePriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
         nextButton.addTarget(self, action: "didTapNextButton", forControlEvents: UIControlEvents.TouchUpInside)
@@ -173,7 +177,9 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
     }
     
     func didTapNextButton () {
-        delegate?.didTweet?(self)
+        if numberOfChars >= 0 {
+            delegate?.didTweet?(self)
+        }
     }
     
     func didTapCancelButton () {
