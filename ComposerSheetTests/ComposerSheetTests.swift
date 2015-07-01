@@ -136,6 +136,19 @@ class ComposerSheetTests: XCTestCase {
         }
     }
     
+    func testTextViewDelegate () {
+        let composerController = DLFComposeViewController()
+        let view = composerController.view
+        
+        XCTAssertTrue(composerController.textView.delegate === composerController, "Text view should have delegate")
+        XCTAssertTrue(composerController.numberOfChars == 0, "Initial number of chars should be zero")
+        
+        composerController.textView.text = ""
+        composerController.textView(composerController.textView, shouldChangeTextInRange: NSMakeRange(0, 0), replacementText: "a")
+        XCTAssertTrue(composerController.numberOfChars == 1, "numberOfChars should be updated when text view delegate is called")
+        XCTAssertTrue(composerController.charactersLabel.text == "116", "when numberOfChars is updated charactersLabel text should be updated too")
+    }
+    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measureBlock() {

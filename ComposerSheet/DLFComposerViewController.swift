@@ -13,7 +13,7 @@ import UIKit
     optional func didTweet(composeViewController: DLFComposeViewController)
 }
 
-class DLFComposeViewController: UIViewController {
+class DLFComposeViewController: UIViewController, UITextViewDelegate {
     
     weak var delegate: DLFComposeViewControllerDelegate?
     
@@ -25,6 +25,13 @@ class DLFComposeViewController: UIViewController {
     let headerLine: UIView
     let textView: UITextView
     let mediaURLLength = 23
+    let maxTweetLength = 140
+    
+    var numberOfChars: Int = 0 {
+        didSet {
+            charactersLabel.text = "\(maxTweetLength-mediaURLLength-numberOfChars)"
+        }
+    }
     
     init() {
         sheetView = UIView(frame: CGRectZero)
@@ -88,13 +95,14 @@ class DLFComposeViewController: UIViewController {
         sheetView.addConstraints(headerLineConstraints())
         
         charactersLabel.setTranslatesAutoresizingMaskIntoConstraints(false)
-        charactersLabel.text = "140"
+        numberOfChars = 0
         charactersLabel.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.2)
         charactersLabel.font = UIFont.systemFontOfSize(12)
         sheetView.addSubview(charactersLabel)
         sheetView.addConstraints(charactersLabelConstraints())
         
         textView.setTranslatesAutoresizingMaskIntoConstraints(false)
+        textView.delegate = self
         sheetView.addSubview(textView)
         sheetView.addConstraints(textViewConstraints())
     }
@@ -177,6 +185,12 @@ class DLFComposeViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+        let string = textView.text as NSString
+        let newText = string.stringByReplacingCharactersInRange(range, withString: text)
+        numberOfChars = count(newText)
+        return true
+    }
     
 }
 
