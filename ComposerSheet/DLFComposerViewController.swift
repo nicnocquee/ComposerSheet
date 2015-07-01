@@ -13,7 +13,7 @@ import UIKit
     optional func didTweet(composeViewController: DLFComposeViewController)
 }
 
-class DLFComposeViewController: UIViewController, UITextViewDelegate {
+public class DLFComposeViewController: UIViewController, UITextViewDelegate {
     
     weak var delegate: DLFComposeViewControllerDelegate?
     
@@ -52,11 +52,11 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required convenience init(coder aDecoder: NSCoder) {
+    required convenience public init(coder aDecoder: NSCoder) {
         self.init()
     }
     
-    override func viewDidLoad() {
+    override public func viewDidLoad() {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.6)
@@ -113,7 +113,7 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         sheetView.addConstraints(textViewConstraints())
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override public func viewDidAppear(animated: Bool) {
         textView.becomeFirstResponder()
     }
     
@@ -188,12 +188,12 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    override func didReceiveMemoryWarning() {
+    override public func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
+    public func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
         let string = textView.text as NSString
         let newText = string.stringByReplacingCharactersInRange(range, withString: text)
         numberOfChars = count(newText)
