@@ -26,6 +26,7 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
     let textView: UITextView
     let mediaURLLength = 23
     let maxTweetLength = 140
+    var topMargin = 20
     
     var numberOfChars: Int = 0 {
         didSet {
@@ -44,11 +45,15 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         headerLine = UIView(frame: CGRectZero)
         charactersLabel = UILabel(frame: CGRectZero)
         textView = UITextView(frame: CGRectZero)
+        
+        cancelButton.setTitle(NSLocalizedString("Cancel", comment: ""), forState: UIControlState.Normal)
+        nextButton.setTitle(NSLocalizedString("Tweet", comment: ""), forState: UIControlState.Normal)
+        sheetTitle.text = NSLocalizedString("Twitter", comment: "")
         super.init(nibName: nil, bundle: nil)
     }
 
-    required init(coder aDecoder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+    required convenience init(coder aDecoder: NSCoder) {
+        self.init()
     }
     
     override func viewDidLoad() {
@@ -67,7 +72,6 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         sheetTitle.setTranslatesAutoresizingMaskIntoConstraints(false)
         headerLine.setTranslatesAutoresizingMaskIntoConstraints(false)
         
-        cancelButton.setTitle(NSLocalizedString("Cancel", comment: ""), forState: UIControlState.Normal)
         cancelButton.setTitleColor(self.view.tintColor, forState: UIControlState.Normal)
         cancelButton.titleLabel!.font = UIFont.systemFontOfSize(15)
         cancelButton.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
@@ -76,7 +80,6 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         cancelButton.addTarget(self, action: "didTapCancelButton", forControlEvents: UIControlEvents.TouchUpInside)
         cancelButton.sizeToFit()
         
-        nextButton.setTitle(NSLocalizedString("Tweet", comment: ""), forState: UIControlState.Normal)
         nextButton.setTitleColor(self.view.tintColor, forState: UIControlState.Normal)
         nextButton.setTitleColor(UIColor.lightGrayColor(), forState: UIControlState.Disabled)
         nextButton.setContentHuggingPriority(1000, forAxis: UILayoutConstraintAxis.Horizontal)
@@ -86,7 +89,6 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         nextButton.titleLabel!.font = UIFont.boldSystemFontOfSize(15)
         nextButton.sizeToFit()
         
-        sheetTitle.text = NSLocalizedString("Twitter", comment: "")
         sheetTitle.font = UIFont.boldSystemFontOfSize(15)
         
         sheetView.addSubview(cancelButton)
@@ -120,7 +122,7 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         views.setValue(sheetView, forKey: "sheet")
         views.setValue(self.topLayoutGuide, forKey: "topLayoutGuide")
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[sheet]-30-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide]-20-[sheet]", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide]-\(topMargin)-[sheet]", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
         let heightConstraint = NSLayoutConstraint(item: sheetView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: sheetView, attribute: NSLayoutAttribute.Width, multiplier: 0.6, constant: 0)
         return  verticalConstraints + horizontalConstraints + [heightConstraint]
     }

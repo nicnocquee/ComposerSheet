@@ -23,9 +23,9 @@ class ViewController: UIViewController, DLFComposeViewControllerDelegate {
     @IBAction func didTapButton(sender: AnyObject) {
         let composer = DLFComposeViewController()
         composer.delegate = self
-        let navigation = UINavigationController(rootViewController: composer)
-        navigation.modalPresentationStyle = UIModalPresentationStyle.Custom
-        self.presentViewController(navigation, animated: true, completion: nil)
+        composer.topMargin = 40
+        composer.modalPresentationStyle = UIModalPresentationStyle.Custom
+        self.presentViewController(composer, animated: true, completion: nil)
         
     }
     
