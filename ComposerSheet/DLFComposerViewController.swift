@@ -9,13 +9,13 @@
 import Foundation
 import UIKit
 
-@objc protocol DLFComposeViewControllerDelegate {
-    optional func didTweet(composeViewController: DLFComposeViewController)
+@objc protocol DLFComposerViewControllerDelegate {
+    optional func didTweet(composeViewController: DLFComposerViewController)
 }
 
-public class DLFComposeViewController: UIViewController, UITextViewDelegate {
+public class DLFComposerViewController: UIViewController, UITextViewDelegate {
     
-    weak var delegate: DLFComposeViewControllerDelegate?
+    weak var delegate: DLFComposerViewControllerDelegate?
     
     let sheetView: UIView
     let cancelButton: UIButton

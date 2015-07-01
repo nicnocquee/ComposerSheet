@@ -23,7 +23,7 @@ class ComposerSheetTests: XCTestCase {
     
     func testInit() {
         // This is an example of a functional test case.
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         XCTAssertNotNil(composerController.sheetView, "Sheet view should not be nil")
         XCTAssertNotNil(composerController.sheetTitle, "Sheet title should not be nil")
         XCTAssertNotNil(composerController.cancelButton, "Sheet cancel button should not be nil")
@@ -35,7 +35,7 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testSheetComposetConstraints () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         let window = UIApplication.sharedApplication().delegate?.window!
         view.frame = window!.frame
@@ -47,7 +47,7 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testSheetComposerTitleConstraints () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         let window = UIApplication.sharedApplication().delegate?.window!
         view.frame = window!.frame
@@ -65,7 +65,7 @@ class ComposerSheetTests: XCTestCase {
     func testCancelButton () {
         let window = UIWindow(frame: CGRectZero)
         window.makeKeyAndVisible()
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let viewController = UIViewController()
         window.rootViewController = viewController
         viewController.presentViewController(composerController, animated: false, completion: nil)
@@ -78,11 +78,11 @@ class ComposerSheetTests: XCTestCase {
         
         NSRunLoop.mainRunLoop().runUntilDate(NSDate(timeIntervalSinceNow: 0.4))
         
-        XCTAssertNil(viewController.presentedViewController, "Cancel button should dismiss DLFComposeViewController")
+        XCTAssertNil(viewController.presentedViewController, "Cancel button should dismiss DLFComposerViewController")
     }
     
     func testHeaderLineConstraints () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         let window = UIApplication.sharedApplication().delegate?.window!
         view.frame = window!.frame
@@ -91,7 +91,7 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testCharactersLabelConstraints () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         let window = UIApplication.sharedApplication().delegate?.window!
         view.frame = window!.frame
@@ -100,7 +100,7 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testTextViewConstraints () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         let window = UIApplication.sharedApplication().delegate?.window!
         view.frame = window!.frame
@@ -109,13 +109,13 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testNextButton () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         
-        class ComposeDelegate: DLFComposeViewControllerDelegate {
+        class ComposeDelegate: DLFComposerViewControllerDelegate {
             var counter = 0
             
-            @objc func didTweet(composeViewController: DLFComposeViewController) {
+            @objc func didTweet(composeViewController: DLFComposerViewController) {
                 ++counter
             }
         }
@@ -130,7 +130,7 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testCharactersTooMany () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         
         composerController.textView.text = "we're all stories, in the end. Just make it a good one, eh? Because it was, you know, it was the best: a daft old man, who stole a magic box and ran away. Did I ever tell you I stole it? Well, I borrowed it; I was always going to take it back. Oh, that box, Amy, you'll dream about that box. It'll never leave you. Big and little at the same time, brand-new and ancient, and the bluest blue, ever."
@@ -140,7 +140,7 @@ class ComposerSheetTests: XCTestCase {
     }
     
     func testTextViewDelegate () {
-        let composerController = DLFComposeViewController()
+        let composerController = DLFComposerViewController()
         let view = composerController.view
         
         XCTAssertTrue(composerController.textView.delegate === composerController, "Text view should have delegate")
