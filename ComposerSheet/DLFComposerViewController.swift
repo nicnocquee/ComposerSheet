@@ -166,7 +166,7 @@ class DLFComposeViewController: UIViewController, UITextViewDelegate {
         views.setValue(headerLine, forKey: "headerLine")
         views.setValue(charactersLabel, forKey: "charactersLabel")
         
-        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[textView]-0-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
+        let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-8-[textView]-8-|", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
         let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[headerLine]-0-[textView]-0-[charactersLabel]", options: nil, metrics: nil, views: views as [NSObject : AnyObject])
         
         return horizontalConstraints + verticalConstraints
