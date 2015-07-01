@@ -115,6 +115,7 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
     
     override public func viewDidAppear(animated: Bool) {
         textView.becomeFirstResponder()
+        
     }
     
     func sheetComposerConstraints () -> [AnyObject]{
@@ -198,6 +199,10 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
         let newText = string.stringByReplacingCharactersInRange(range, withString: text)
         numberOfChars = count(newText)
         return true
+    }
+    
+    public func textViewDidBeginEditing(textView: UITextView) {
+        textView.selectedRange = NSMakeRange(0, 0)
     }
     
 }

@@ -24,6 +24,7 @@ class ViewController: UIViewController, DLFComposerViewControllerDelegate {
         let composer = DLFComposerViewController()
         composer.delegate = self
         composer.topMargin = 40
+        composer.textView.text = " via @lovely_app"
         composer.modalPresentationStyle = UIModalPresentationStyle.Custom
         self.presentViewController(composer, animated: true, completion: nil)
         
