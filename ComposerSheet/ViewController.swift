@@ -31,7 +31,7 @@ class ViewController: UIViewController, DLFComposerViewControllerDelegate {
     }
     
     func didTweet(composeViewController: DLFComposerViewController) {
-        println("did tweet")
+        print("did tweet")
     }
 
 }

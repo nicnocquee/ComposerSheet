@@ -52,7 +52,7 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
         super.init(nibName: nil, bundle: nil)
     }
 
-    required convenience public init(coder aDecoder: NSCoder) {
+    required convenience public init?(coder aDecoder: NSCoder) {
         self.init()
     }
     
@@ -122,7 +122,7 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
     func sheetComposerConstraints () -> [NSLayoutConstraint]{
         let viewBindings = ["topLayoutGuide": self.topLayoutGuide, "sheet": sheetView]
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-30-[sheet]-30-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings as! [String : AnyObject])
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide]-\(topMargin)-[sheet]", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings as! [String : AnyObject])
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:|[topLayoutGuide]-\(topMargin)-[sheet]", options: NSLayoutFormatOptions.AlignAllLeft, metrics: nil, views: viewBindings as! [String : AnyObject])
         let heightConstraint = NSLayoutConstraint(item: sheetView, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: sheetView, attribute: NSLayoutAttribute.Width, multiplier: 0.6, constant: 0)
         return  verticalConstraints + horizontalConstraints + [heightConstraint]
     }
@@ -134,6 +134,9 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
             "nextButton": nextButton,
             "sheetTitle": sheetTitle
         ]
+        sheetTitle.setContentHuggingPriority(UILayoutPriorityRequired, forAxis: UILayoutConstraintAxis.Horizontal)
+        cancelButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: UILayoutConstraintAxis.Horizontal)
+        nextButton.setContentCompressionResistancePriority(UILayoutPriorityRequired, forAxis: UILayoutConstraintAxis.Horizontal)
         
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-10-[cancelButton]->=0-[sheetTitle]->=0-[nextButton]-10-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
         let sheetTitleCenterXConstraint = NSLayoutConstraint(item: sheetTitle, attribute: NSLayoutAttribute.CenterX, relatedBy: NSLayoutRelation.Equal, toItem: sheetView, attribute: NSLayoutAttribute.CenterX, multiplier: 1, constant: 0)
@@ -150,7 +153,7 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
         
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-0-[headerLine]-0-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
         let heightConstraint = NSLayoutConstraint(item: headerLine, attribute: NSLayoutAttribute.Height, relatedBy: NSLayoutRelation.Equal, toItem: nil, attribute: NSLayoutAttribute.NotAnAttribute, multiplier: 1, constant: 1)
-        let topConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[sheetTitle]-15-[headerLine]", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
+        let topConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[sheetTitle]-15-[headerLine]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: viewBindings)
         
         return horizontalConstraints + topConstraints + [heightConstraint]
     }
@@ -159,7 +162,7 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
         let viewBindings = ["charactersLabel": charactersLabel]
         
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:[charactersLabel]-10-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[charactersLabel]-10-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[charactersLabel]-10-|", options: NSLayoutFormatOptions.AlignAllLeading, metrics: nil, views: viewBindings)
         
         return horizontalConstraints + verticalConstraints
     }
@@ -168,7 +171,7 @@ public class DLFComposerViewController: UIViewController, UITextViewDelegate {
         let viewBindings = ["headerLine": headerLine, "textView": textView, "charactersLabel": charactersLabel]
         
         let horizontalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("H:|-8-[textView]-8-|", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
-        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[headerLine]-0-[textView]-0-[charactersLabel]", options: NSLayoutFormatOptions.AlignAllBaseline, metrics: nil, views: viewBindings)
+        let verticalConstraints = NSLayoutConstraint.constraintsWithVisualFormat("V:[headerLine]-0-[textView]-0-[charactersLabel]", options: NSLayoutFormatOptions.AlignAllCenterX, metrics: nil, views: viewBindings)
         
         return horizontalConstraints + verticalConstraints
     }
