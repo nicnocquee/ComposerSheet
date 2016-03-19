@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "ComposerSheet"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Composer sheet that looks similar with built in Twitter composer sheet on iOS written in Swift"
 
   s.description  = <<-DESC
